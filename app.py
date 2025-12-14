@@ -11,9 +11,6 @@ import cv2
 from ultralytics import YOLO
 from PIL import Image
 
-# ---------------------------------
-# Page config
-# ---------------------------------
 st.set_page_config(
     page_title="Daimler: Parts Detector",
     layout="centered"
@@ -21,18 +18,12 @@ st.set_page_config(
 
 st.title("Daimler - Parts Detection")
 
-# ---------------------------------
-# Load YOLO model
-# ---------------------------------
 @st.cache_resource
 def load_model():
-    return YOLO("train5/best.pt")   # path to your trained model
+    return YOLO("best.pt")   # path to your trained model
 
 model = load_model()
 
-# ---------------------------------
-# Input source
-# ---------------------------------
 st.subheader("📷 Capture Image")
 
 image_file = st.camera_input("Take a picture")
@@ -43,17 +34,12 @@ image_file = st.camera_input("Take a picture")
 #        type=["jpg", "jpeg", "png"]
 #    )
 
-# ---------------------------------
-# Run inference
-# ---------------------------------
 if image_file is not None:
 
-    # Read image
     image = Image.open(image_file).convert("RGB")
     img_np = np.array(image)
 
 
-    # Run YOLO prediction (direct numpy input)
     results = model.predict(
         source=img_np,
         conf=0.25,
@@ -71,7 +57,6 @@ if image_file is not None:
         use_container_width=True
     )
 
-    # Extract detected classes
     if results[0].boxes is not None:
         class_ids = results[0].boxes.cls.cpu().numpy().astype(int)
         detected_classes = [model.names[i] for i in class_ids]
@@ -84,3 +69,4 @@ if image_file is not None:
             st.warning("No objects detected.")
     else:
         st.warning("No objects detected.")
+
