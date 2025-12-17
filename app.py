@@ -28,11 +28,11 @@ st.subheader("📷 Capture Image")
 
 image_file = st.camera_input("Take a picture")
 
-#if image_file is None:
-#    image_file = st.file_uploader(
-#        "Or upload an image",
-#        type=["jpg", "jpeg", "png"]
-#    )
+if image_file is None:
+    image_file = st.file_uploader(
+        "Or upload an image",
+        type=["jpg", "jpeg", "png"]
+    )
 
 if image_file is not None:
 
@@ -69,4 +69,5 @@ if image_file is not None:
             st.warning("No objects detected.")
     else:
         st.warning("No objects detected.")
+
 
