@@ -42,7 +42,7 @@ if image_file is not None:
 
     results = model.predict(
         source=img_np,
-        conf=0.25,
+        conf=0.30,
         iou=0.5,
         verbose=False
     )
@@ -69,5 +69,6 @@ if image_file is not None:
             st.warning("No objects detected.")
     else:
         st.warning("No objects detected.")
+
 
 
